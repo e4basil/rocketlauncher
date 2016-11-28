@@ -1,8 +1,23 @@
 package com.raywenderlich.rocketlaunch.animationactivities;
 
-public class RotateRocketAnimationActivity extends BaseAnimationActivity {
-  @Override
-  protected void onStartAnimation() {
+import android.animation.ValueAnimator;
+import android.view.animation.LinearInterpolator;
 
-  }
+public class RotateRocketAnimationActivity extends BaseAnimationActivity {
+    @Override
+    protected void onStartAnimation() {
+        ValueAnimator valueAnimator = ValueAnimator.ofFloat(0, -360);
+
+        valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                float value = (float) animation.getAnimatedValue();
+                mRocket.setRotation(value);
+            }
+        });
+
+        valueAnimator.setInterpolator(new LinearInterpolator());
+        valueAnimator.setDuration(DEFAULT_ANIMATION_DURATION);
+        valueAnimator.start();
+    }
 }
